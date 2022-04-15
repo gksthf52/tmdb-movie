@@ -13,8 +13,8 @@
       <swiper-slide v-for="a in 6" :key="a">
         <router-link to="/detail">클릭</router-link>
         <div>
-          <!-- <img :src='`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1${imgname}`' alt=""> -->
-          <p>{{imgname.data.results[0].poster_path}}</p>
+          <img :src='url' alt="">
+          <p>{{movietitle}}</p>
         </div>
       </swiper-slide>
 
@@ -58,7 +58,10 @@ export default {
       query: '',
       results: '',
       imgname : '',
-      // apikey : 'eee59ded3d3f9fb38792c3a4c12362a5'
+      apikey : 'eee59ded3d3f9fb38792c3a4c12362a5',
+      imgurl : '',
+      url : '',
+      movietitle:''
     }
   },
  methods: {
@@ -69,21 +72,17 @@ export default {
  }
 }
 
-axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
+const url = 'https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1';
+axios.get(url)
 .then(movie => {
   console.log(movie)
   console.log(movie.data.results[0].poster_path)
-  this.imgname = movie
+  var img = movie.data.results[0].poster_path
+  var title = movie.data.results[0].original_title
+  console.log(title)
+  this.imgurl = img
+  this.movietitle = title
 })
-// const url = "https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1";
-
-
-// axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1${imgname}`)
-// .then(movie => {
-//   console.log(movie)
-//   console.log(movie.data.results[0].poster_path)
-//   this.imgname = movie.data.results[0].poster_path
-// })
 
 </script>
 
