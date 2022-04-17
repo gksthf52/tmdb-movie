@@ -10,16 +10,23 @@
     @swiper="onSwiper"
     @slideChange="onSlideChange">
 
-      <swiper-slide v-for="a in 6" :key="a">
+      <swiper-slide v-for='a in poster' :key='a'>
         <router-link to="/detail">클릭</router-link>
         <div>
-          <img :src='url' alt="">
-          <p>{{movietitle}}</p>
+          
+          <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${a.backdrop_path}`' alt="">
+          <!-- <img :src='imgurl' alt=""> -->
+          <!-- <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${imgurl}`' alt=""> -->
         </div>
       </swiper-slide>
 
+
     </swiper>
   <router-view></router-view>
+  
+      <!-- <img :src='imgurl' alt=""> -->
+      <!-- <p>{{imgurl}}</p> -->
+      <button @click="more">이미지 가져와</button>
 </template>
 
 
@@ -31,6 +38,7 @@ import axios from 'axios'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+// import func from 'vue-editor-bridge';
 
 
 
@@ -55,16 +63,34 @@ export default {
   },
   data () {
     return {
-      query: '',
-      results: '',
-      imgname : '',
-      apikey : 'eee59ded3d3f9fb38792c3a4c12362a5',
+      apikey : '',
       imgurl : '',
-      url : '',
-      movietitle:''
+      poster : []
     }
   },
+  mounted () {
+    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
+     .then( 결과 =>{
+       //  this.imgurl = 결과.data
+      this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5'
+      this.poster = 결과.data.results
+       this.imgurl = 결과.data.results[0].backdrop_path 
+       console.log(this.poster);
+     })
+
+  },
  methods: {
+   
+  //  more() {
+  //    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
+  //    .then( 결과 =>{
+  //      //  this.imgurl = 결과.data
+  //     this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5'
+  //     this.poster = 결과.data.results
+  //      this.imgurl = 결과.data.results[0].backdrop_path 
+  //      console.log(this.poster);
+  //    })
+  //  }
    
  },
  actions : {
@@ -72,17 +98,6 @@ export default {
  }
 }
 
-const url = 'https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1';
-axios.get(url)
-.then(movie => {
-  console.log(movie)
-  console.log(movie.data.results[0].poster_path)
-  var img = movie.data.results[0].poster_path
-  var title = movie.data.results[0].original_title
-  console.log(title)
-  this.imgurl = img
-  this.movietitle = title
-})
 
 </script>
 
