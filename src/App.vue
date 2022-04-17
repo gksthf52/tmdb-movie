@@ -14,7 +14,7 @@
         <router-link to="/detail">클릭</router-link>
         <div>
           
-          <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${a.backdrop_path}`' alt="">
+          <img class="poster" :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">
           <!-- <img :src='imgurl' alt=""> -->
           <!-- <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${imgurl}`' alt=""> -->
         </div>
@@ -72,9 +72,9 @@ export default {
     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
      .then( 결과 =>{
        //  this.imgurl = 결과.data
-      this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5'
+      // this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5' 634649
       this.poster = 결과.data.results
-       this.imgurl = 결과.data.results[0].backdrop_path 
+       this.imgurl = 결과.data.results[0].poster_path 
        console.log(this.poster);
      })
 
@@ -112,7 +112,7 @@ export default {
 }
 
 .swiper-slide{
-  height: 150px;
+  /* height: 150px; */
   border: 1px solid #000;
   box-sizing: border-box;
 }
