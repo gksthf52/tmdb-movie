@@ -3,30 +3,51 @@
   <router-link to="/detail">상세페이지</router-link>
     <swiper
     :modules="modules"
-    :slides-per-view="4"
-    :space-between="10"
+    :slides-per-view="6"
     navigation
     :pagination="{ clickable: true }"
     @swiper="onSwiper"
     @slideChange="onSlideChange">
 
       <swiper-slide v-for='a in poster' :key='a'>
-        <router-link to="/detail">클릭</router-link>
-        <div>
-          
-          <img class="poster" :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">
+        <!-- <router-link to="/detail"></router-link> -->
+        <div class="poster">          
+          <img class="poster-img" :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">
+          <div class="poster-con">
+            <h5>{{a.title}}</h5>     
+            <span>{{a.release_date}}</span>       
+          </div>
           <!-- <img :src='imgurl' alt=""> -->
           <!-- <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${imgurl}`' alt=""> -->
         </div>
       </swiper-slide>
+    </swiper>
 
+<!--  -->
+    <swiper
+    :modules="modules"
+    :slides-per-view="6"
+    navigation
+    :pagination="{ clickable: true }"
+    @swiper="onSwiper"
+    @slideChange="onSlideChange">
 
+      <swiper-slide v-for='a in poster1' :key='a'>
+        <router-link to="/detail">
+          <!-- <img class="poster" :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">         -->
+        </router-link>
+        <div class="poster">          
+          <img class="poster-img" :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">
+          <div class="poster-con">
+            <h5>{{a.title}}</h5>     
+            <span>{{a.release_date}}</span>         
+          </div>
+          <!-- <img :src='imgurl' alt=""> -->
+          <!-- <img :src='`https://www.themoviedb.org/t/p/w220_and_h330_face/${imgurl}`' alt=""> -->
+        </div>
+      </swiper-slide>
     </swiper>
   <router-view></router-view>
-  
-      <!-- <img :src='imgurl' alt=""> -->
-      <!-- <p>{{imgurl}}</p> -->
-      <button @click="more">이미지 가져와</button>
 </template>
 
 
@@ -37,7 +58,7 @@ import axios from 'axios'
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+// import 'swiper/css/pagination';
 // import func from 'vue-editor-bridge';
 
 
@@ -65,7 +86,8 @@ export default {
     return {
       apikey : '',
       imgurl : '',
-      poster : []
+      poster : [],
+      poster1 : []
     }
   },
   mounted () {
@@ -74,10 +96,13 @@ export default {
        //  this.imgurl = 결과.data
       // this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5' 634649
       this.poster = 결과.data.results
-       this.imgurl = 결과.data.results[0].poster_path 
        console.log(this.poster);
      })
-
+    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
+     .then( 결과1 =>{
+      this.poster1 = 결과1.data.results
+       console.log(this.poster1);
+     })
   },
  methods: {
    
@@ -108,12 +133,45 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-.swiper-slide{
-  /* height: 150px; */
-  border: 1px solid #000;
-  box-sizing: border-box;
+.swiper{
+  padding: 20px;
+}
+
+.poster{
+  margin-right: 15px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 9px #aaa;
+  overflow: hidden;
+}
+
+.poster-img{
+  width: 100%;
+}
+
+.poster-con{
+  text-align: left;
+  height: 50px;
+  line-height: 14px;
+  padding: 5px;
+}
+
+.poster-con span{
+  font-size: 10px;
+}
+
+body{
+  margin: 0;
+}
+
+:root{
+  --swiper-theme-color :#000
+}
+
+h5{
+  margin: 0;
+  font-size: 12px;
 }
 </style>
