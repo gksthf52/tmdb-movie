@@ -9,21 +9,21 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click="modal++" v-for='a in poster' :key='a'>
+    <swiper-slide @click="modal=1" v-for='(a,i) in poster' :key='i'>
       <!-- <router-link to="/detail"></router-link> -->
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
         </div>
         <div class="poster-con">
-          <h5>{{a.title}}</h5>     
-          <span>{{a.release_date}}</span>         
+          <h5>{{a.title}}</h5>
+          <span>{{a.release_date}}</span>
         </div>
       </div>
     </swiper-slide>
   </swiper>
 
-  <Modal @closeModal="modal--" :modal="modal" :poster="poster" :a="poster[a]"/>
+  <Modal @closeModal="modal--; pick = i" :modal="modal" :poster="poster"/>
 
 </template>
 
@@ -44,6 +44,7 @@ export default {
   props : {
     poster : Array,
     swiperOptions : Object,
+    a : Object
   },
   data (){
     return {

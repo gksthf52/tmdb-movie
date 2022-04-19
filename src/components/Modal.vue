@@ -1,22 +1,24 @@
 <template>
   <div class="modal-full" v-if="modal == 1">
     <div class="modal-con">
-      <p>이건 모달 창</p>
-      <!-- <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%"> -->
-      
-      <button class="close-btn" @click="$emit('closeModal')">
-        닫기
-      </button>
+      <img :src='`https://www.themoviedb.org/t/p/w300${poster[2].poster_path}`' alt="" style="width:100%">
+      <!-- <p>{{poster[pick].overview}}</p>       -->
+      <button class="close-btn" @click="$emit('closeModal')">닫기</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return{
+    }
+  },
   props : {
     poster : Array,
     modal : Number,
-    a: Object,
+    pick : Number
+
   },
 
 }
@@ -38,7 +40,8 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  padding: 50px;
+  padding: 15px;
+  font-size: 12px;
 }
 .close-btn{
   color: #000;
