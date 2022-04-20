@@ -9,21 +9,22 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click="modal=1" v-for='(a,i) in poster' :key='i'>
-      <!-- <router-link to="/detail"></router-link> -->
+    <swiper-slide @click="modal=1; pick=i ;" v-for='(a,i) in poster' :key='i'>
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
         </div>
         <div class="poster-con">
-          <h5>{{a.title}}</h5>
-          <span>{{a.release_date}}</span>
+          <h5>{{a.title}}</h5>     
+          <span>{{a.release_date}}</span>         
         </div>
       </div>
     </swiper-slide>
   </swiper>
 
-  <Modal @closeModal="modal--; pick = i" :modal="modal" :poster="poster"/>
+  <transition name="fade">
+    <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :movievideo="movievideo" :pick="pick"/>  
+  </transition>
 
 </template>
 
@@ -44,11 +45,11 @@ export default {
   props : {
     poster : Array,
     swiperOptions : Object,
-    a : Object
   },
   data (){
     return {
-      modal : 0
+      modal : 0,
+      pick : 0
     }
   },
   setup() {
@@ -59,6 +60,12 @@ export default {
 }
 </script>
 <style>
+.fade-enter-from{opacity: 0;}
+.fade-enter-active{transition: all 0.5s;}
+.fade-enter-to{opacity: 1;}
+.fade-leave-from{opacity: 1;}
+.fade-leave-active{transition: all 0.5s;}
+.fade-leave-to{opacity: 0;}
 
 
 </style>

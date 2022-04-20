@@ -7,7 +7,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">
-      <swiper-slide v-for='a in poster1' :key='a'>
+      <swiper-slide @click="modal=1; pick=i" v-for='(a,i) in poster1' :key='i'>
       <router-link to="/detail"></router-link>
       <div class="poster">          
           <div class="poster-img">
@@ -20,6 +20,9 @@
       </div>
       </swiper-slide>
   </swiper>
+
+
+  <Modal @closeModal="modal--;" :modal="modal" :poster1="poster1" :pick="pick"/>
 </template>
 
 <script>
@@ -27,11 +30,19 @@ import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import Modal from './Modal.vue'
 
 export default {
   components:{
     Swiper,
     SwiperSlide,
+    Modal : Modal
+  },
+  data (){
+    return {
+      modal : 0,
+      pick : 0
+    }
   },
   props : {
     poster1 : Array,

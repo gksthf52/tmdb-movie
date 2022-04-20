@@ -1,8 +1,10 @@
 <template>
   <router-link to="/">홈</router-link>
   <router-link to="/detail">상세페이지</router-link>
+  <video src="https://www.youtube.com/watch?v=qvCogW-N-HE"></video>
+    <!-- <a href="https://www.youtube.com/watch?v=BdJKm16Co6M" target="_blank">유트브</a> -->
 
-    <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
+    <PopularMovie :poster="poster" :swiperOptions="swiperOptions" :movievideo="movievideo"/>
     <NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
     <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" />
     
@@ -11,7 +13,7 @@
 
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -42,9 +44,11 @@ export default {
   data () {
     return {
       apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
+      주제 : 'popular',
       poster : [],
       poster1 : [],
       poster2 : [],
+      movievideo : [],
       swiperOptions: {
         breakpoints: {
           1024: {
@@ -62,35 +66,29 @@ export default {
   },
   mounted () {
 
-    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+    axios.get(`https://api.themoviedb.org/3/movie/${this.주제}?api_key=${this.apikey}&language=ko&page=1`)
      .then( 결과 =>{
       this.poster = 결과.data.results
-       console.log(this.poster);
+      //  console.log(this.poster, this.주제);
      })
     axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
      .then( 결과1 =>{
       this.poster1 = 결과1.data.results
-       console.log(this.poster1);
+      //  console.log(this.poster1);
      })
     axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
      .then( 결과2 =>{
       this.poster2 = 결과2.data.results
-       console.log(this.poster2);
+      //  console.log(this.poster2);
      })
+    axios.get(`https://api.themoviedb.org/3/movie/675353/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US`)
+     .then( 결과3 =>{
+      this.movievideo = 결과3.data.results
+       console.log(this.movievideo);
+     })    
      
   },
  methods: {
-   
-  //  more() {
-  //    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US&page=1`)
-  //    .then( 결과 =>{
-  //      //  this.imgurl = 결과.data
-  //     this.apikey = 'eee59ded3d3f9fb38792c3a4c12362a5'
-  //     this.poster = 결과.data.results
-  //      this.imgurl = 결과.data.results[0].backdrop_path 
-  //      console.log(this.poster);
-  //    })
-  //  }
    
  },
  actions : {
@@ -100,6 +98,7 @@ export default {
 
 
 </script>
+
 
 <style>
 #app {
@@ -116,9 +115,6 @@ export default {
 
 .poster{
   margin-right: 20px;
-  /* border-radius: 10px;
-  box-shadow: 0px 0px 5px #94949466;
-  overflow: hidden; */
   color: #fff;
 }
 

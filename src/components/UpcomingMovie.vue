@@ -20,6 +20,8 @@
       </div>
     </swiper-slide>
   </swiper>
+
+  <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>
 </template>
 
 <script>
