@@ -1,10 +1,16 @@
 <template>
   <router-link to="/">홈</router-link>
   <router-link to="/detail">상세페이지</router-link>
-  <video src="https://www.youtube.com/watch?v=qvCogW-N-HE"></video>
-    <!-- <a href="https://www.youtube.com/watch?v=BdJKm16Co6M" target="_blank">유트브</a> -->
+  <div>
+  <!-- <video src="https://www.youtube.com/watch?v=BdJKm16Co6M" width="400" controls autoplay ref="video"></video> -->
+  
+  <!-- <iframe id="ytplayer" type="text/html" width="640" height="360"
+  src="https://www.youtube.com/embed/1HqBaI-FV7Y?autoplay=1&origin=http://example.com"
+  frameborder="0"></iframe> -->
 
-    <PopularMovie :poster="poster" :swiperOptions="swiperOptions" :movievideo="movievideo"/>
+  </div>
+
+    <PopularMovie :poster="poster" :swiperOptions="swiperOptions"/>
     <NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
     <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" />
     
@@ -24,22 +30,24 @@ import NowPlayingMovie from './components/NowPlayingMovie.vue'
 
 export default {
   name: 'App',
+  computed:{
+  },
   components: {
     PopularMovie : PopularMovie,
     UpcomingMovie : UpcomingMovie,
     NowPlayingMovie : NowPlayingMovie,
   },
   setup() {
-    const onSwiper = (swiper) => {
-      console.log(swiper);
-    };
-    const onSlideChange = () => {
-      console.log('slide change');
-    };
-    return {
-      onSwiper,
-      onSlideChange,
-    };
+    // const onSwiper = (swiper) => {
+    //   console.log(swiper);
+    // };
+    // const onSlideChange = () => {
+    //   console.log('slide change');
+    // };
+    // return {
+    //   onSwiper,
+    //   onSlideChange,
+    // };
   },
   data () {
     return {
@@ -48,7 +56,6 @@ export default {
       poster : [],
       poster1 : [],
       poster2 : [],
-      movievideo : [],
       swiperOptions: {
         breakpoints: {
           1024: {
@@ -81,12 +88,11 @@ export default {
       this.poster2 = 결과2.data.results
       //  console.log(this.poster2);
      })
-    axios.get(`https://api.themoviedb.org/3/movie/675353/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=en-US`)
-     .then( 결과3 =>{
-      this.movievideo = 결과3.data.results
-       console.log(this.movievideo);
-     })    
-     
+    // axios.get(`https://api.themoviedb.org/3/movie/550/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
+    //  .then( 결과3 =>{
+    //   this.movievideo = 결과3.data.results[0].key
+    //    console.log(this.movievideo); //키값 나옴
+    //  })
   },
  methods: {
    

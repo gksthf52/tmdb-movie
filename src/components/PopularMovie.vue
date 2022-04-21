@@ -9,7 +9,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click="modal=1; pick=i ;" v-for='(a,i) in poster' :key='i'>
+    <swiper-slide @click="modal=1, pick=i, movieId = poster[pick].id " v-for='(a,i) in poster' :key='i'>
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
@@ -23,12 +23,13 @@
   </swiper>
 
   <transition name="fade">
-    <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :movievideo="movievideo" :pick="pick"/>  
+    <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick" :movieId="movieId"/>  
   </transition>
 
 </template>
 
 <script>
+import axios from 'axios';
 
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -49,14 +50,25 @@ export default {
   data (){
     return {
       modal : 0,
-      pick : 0
+      pick : 0,
+      movieId : 0,
     }
+  },
+  methods:{
+
   },
   setup() {
     return {
       modules: [ Navigation ]
     };
   },
+  mounted() {
+    axios.get(`https://api.themoviedb.org/3/movie/${this.movieId}/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
+     .then( 결과3 =>{
+      this.movievideo = 결과3;
+      //  console.log(this.movievideo);
+     })
+  }
 }
 </script>
 <style>
