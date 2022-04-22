@@ -10,9 +10,11 @@
 
   </div>
 
-    <PopularMovie :poster="poster" :swiperOptions="swiperOptions"/>
+    <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
     <NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
     <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" />
+
+    <Movie v-for="(thisposter,i) in posters" :key="i" :posters="posters" :thisposter="thisposter" :swiperOptions="swiperOptions"/>
     
   <!-- <router-view></router-view> -->
 </template>
@@ -27,6 +29,7 @@ import 'swiper/css/navigation';
 import PopularMovie from './components/PopularMovie.vue'
 import UpcomingMovie from './components/UpcomingMovie.vue'
 import NowPlayingMovie from './components/NowPlayingMovie.vue'
+import Movie from './components/Movie.vue'
 
 export default {
   name: 'App',
@@ -36,18 +39,19 @@ export default {
     PopularMovie : PopularMovie,
     UpcomingMovie : UpcomingMovie,
     NowPlayingMovie : NowPlayingMovie,
+    Movie : Movie
   },
   setup() {
-    // const onSwiper = (swiper) => {
-    //   console.log(swiper);
-    // };
-    // const onSlideChange = () => {
-    //   console.log('slide change');
-    // };
-    // return {
-    //   onSwiper,
-    //   onSlideChange,
-    // };
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log('slide change');
+    };
+    return {
+      onSwiper,
+      onSlideChange,
+    };
   },
   data () {
     return {
@@ -56,6 +60,30 @@ export default {
       poster : [],
       poster1 : [],
       poster2 : [],
+      posters : [{
+        title : '인기영화',
+        poster : axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+          .then( 결과 => {
+            console.log(this.poster);
+            return this.poster = 결과.data.results
+          })
+      },{
+        title : '상영중',
+        poster : axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+          .then( 결과 => {
+             console.log(this.poster);
+            return this.poster = 결과.data.results
+          })
+      },{
+        title : '개봉예정',
+        poster : axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+          .then( 결과 => {
+             console.log(this.poster);
+            return this.poster = 결과.data.results
+          })
+
+      }],
+      어떤영상인지 : '',
       swiperOptions: {
         breakpoints: {
           1024: {
@@ -88,15 +116,19 @@ export default {
       this.poster2 = 결과2.data.results
       //  console.log(this.poster2);
      })
-    // axios.get(`https://api.themoviedb.org/3/movie/550/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
-    //  .then( 결과3 =>{
-    //   this.movievideo = 결과3.data.results[0].key
-    //    console.log(this.movievideo); //키값 나옴
-    //  })
   },
- methods: {
-   
- },
+  methods: {
+
+    allmovieVideo(어떤영상인지) {
+      axios.get(`https://api.themoviedb.org/3/movie/${어떤영상인지}?api_key=${this.apikey}&language=ko&page=1`)
+      .then( 결과는 =>{
+        this.cate = 결과는.data.results
+        //  console.log();
+      })
+
+    }
+
+  },
  actions : {
 
  }

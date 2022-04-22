@@ -2,18 +2,9 @@
   <div class="modal-full" v-if="modal == 1">
     <div class="modal-area">
       <div class="modal-img">
-        <img :src='`https://www.themoviedb.org/t/p/w300${poster[pick].poster_path}`' alt="" style="">
+        <img :src='imageurl(poster[pick].poster_path)' alt="" style="">
       </div>
-      <!-- <iframe id="ytplayer" type="text/html" width="640" height="360"
-  src="https://www.youtube.com/embed/1HqBaI-FV7Y?autoplay=1&origin=http://example.com"
-  frameborder="0"></iframe> -->
-
-      <iframe id="ytplayer" type="text/html" width="340" height="160"
-        :src='`https://www.youtube.com/embed/${movievideo}?autoplay=1&origin=http://example.com`'
-        frameborder="0"></iframe>
-
-        <!-- <p>{{movieId}}</p> -->
-        <!-- <p>{{poster[pick].id}} {{movieId}}</p> -->
+      <iframe id="ytplayer" type="text/html" width="100%" :src='youtubeurl(poster[pick].id)' frameborder="0"></iframe>
 
       <p class="modal-movie-tit">영화 제목 : {{poster[pick].title }}</p>     
       <p class="modal-movie-date">개봉 일자 : {{poster[pick].release_date }}</p>     
@@ -31,44 +22,37 @@ export default {
     poster : Array,
     modal : Number,
     pick : Number,
-    movieId : Number
 
   },
   data () {
     return{
       full : true,
-      movievideo : ''
+      movieKey :''
     }
   },
   methods:{
-    init() {
-      name()
-    },
-    name(){
-      console.log('qkqkqkqk')
-    },
-      more() {
+    more() {
       this.full = !this.full
-      // console.log(this.full, this.movieId)
     },
+
+    imageurl(img) {
+      return `https://www.themoviedb.org/t/p/w300${img}`
+    },
+
+    youtubeurl(movieId) {
+        axios.get(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
+        .then (결과4 => {
+          this.movieKey = 결과4.data.results[0].key
+          // console.log('영화 id : '+movieId, ', 영화 key : '+this.movieKey);
+        })
+
+      return `https://www.youtube.com/embed/${this.movieKey}?autoplay=1&origin=http://example.com`
+    }
   },
 
   mounted(){
-
-    gsap.to('.modal-movie-tit', {duration:0.3, opacity:0.5})
-
-    this.$nextTick(function () {
-      
-    })
-    
+    gsap.to('.modal-movie-tit', {duration:0.3, opacity:0.5})    
   },
-  beforeMount(){
-    axios.get(`https://api.themoviedb.org/3/movie/550/videos?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
-        .then( 결과3 =>{
-          this.movievideo = 결과3.data.results[0].key
-          console.log(this.movievideo); //키값 나옴
-        })
-  }
   }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-
-  <h2>인기 영화</h2>
+  
+  <h2>{{thisposter.title}}</h2>
 
   <swiper
   :breakpoints="swiperOptions.breakpoints"
@@ -9,7 +9,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click="modal=1, pick=i" v-for='(a,i) in poster' :key='i'>
+    <swiper-slide @click="modal=1, pick=i" v-for='(a,i) in thisposter' :key='i'>
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
@@ -23,13 +23,11 @@
   </swiper>
 
   <transition name="fade">
-    <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
+    <Modal @closeModal="modal--;" :modal="modal" :poster="thisposter" :pick="pick"/>  
   </transition>
-
 </template>
 
 <script>
-
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
@@ -37,14 +35,17 @@ import 'swiper/css/navigation';
 import Modal from './Modal.vue'
 
 export default {
+
   components:{
     Swiper,
     SwiperSlide,
-    Modal : Modal
+    Modal : Modal,
   },
   props : {
     poster : Array,
     swiperOptions : Object,
+    posters : Array,
+    thisposter : Object
   },
   data (){
     return {
@@ -61,17 +62,11 @@ export default {
     };
   },
   mounted() {
-
   }
+
 }
 </script>
-<style>
-.fade-enter-from{opacity: 0;}
-.fade-enter-active{transition: all 0.5s;}
-.fade-enter-to{opacity: 1;}
-.fade-leave-from{opacity: 1;}
-.fade-leave-active{transition: all 0.5s;}
-.fade-leave-to{opacity: 0;}
 
+<style>
 
 </style>
