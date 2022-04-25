@@ -23,7 +23,7 @@
   </swiper>
 
   <transition name="fade">
-    <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
+    <ModalPop @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
   </transition>
 
 </template>
@@ -34,13 +34,14 @@ import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Modal from './Modal.vue'
+import ModalPop from './modal/Modal-popular.vue'
+
 
 export default {
   components:{
     Swiper,
     SwiperSlide,
-    Modal : Modal
+    ModalPop : ModalPop
   },
   props : {
     poster : Array,
@@ -66,12 +67,5 @@ export default {
 }
 </script>
 <style>
-.fade-enter-from{opacity: 0;}
-.fade-enter-active{transition: all 0.5s;}
-.fade-enter-to{opacity: 1;}
-.fade-leave-from{opacity: 1;}
-.fade-leave-active{transition: all 0.5s;}
-.fade-leave-to{opacity: 0;}
-
 
 </style>

@@ -22,21 +22,23 @@
   </swiper>
 
 
-  <Modal @closeModal="modal--;" :modal="modal" :poster1="poster1" :pick="pick"/>
+  <ModalNow @closeModal="modal--;" :modal="modal" :poster1="poster1" :pick="pick"/>
 </template>
 
 <script>
+import gsap from 'gsap';
+// import {onMounted} from 'vue';
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Modal from './Modal.vue'
+import ModalNow from './modal/Modal-nowplaying.vue'
 
 export default {
   components:{
     Swiper,
     SwiperSlide,
-    Modal : Modal
+    ModalNow : ModalNow
   },
   data (){
     return {
@@ -53,6 +55,14 @@ export default {
       modules: [ Navigation,   ]
     };
   },
+  methods : {
+
+  },
+  mounted () {
+    gsap.to('.swiper-slide',{
+      x:100
+    })
+  }
 }
 
 </script>

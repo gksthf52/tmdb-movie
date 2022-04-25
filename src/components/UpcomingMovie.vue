@@ -1,5 +1,7 @@
 <template>
+
   <h2>개봉 예정 영화</h2>
+
   <swiper
   :breakpoints="swiperOptions.breakpoints"
   :modules="modules"
@@ -7,7 +9,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">
-    <swiper-slide v-for='a in poster2' :key='a'>
+    <swiper-slide @click="modal=1; pick=i" v-for='(a,i) in poster2' :key='i'>
       <router-link to="/detail"></router-link>
       <div class="poster">          
         <div class="poster-img">
@@ -21,7 +23,7 @@
     </swiper-slide>
   </swiper>
 
-  <Modal @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>
+  <ModalUp @closeModal="modal--;" :modal="modal" :poster2="poster2" :pick="pick"/>
 </template>
 
 <script>
@@ -29,11 +31,19 @@ import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import ModalUp from './modal/Modal-upcoming.vue'
 
 export default {
   components:{
     Swiper,
     SwiperSlide,
+    ModalUp : ModalUp
+  },
+  data (){
+    return {
+      modal : 0,
+      pick : 0
+    }
   },
   props : {
     poster2 : Array,
@@ -49,5 +59,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>
