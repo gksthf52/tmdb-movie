@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios';
+// import { gsap } from 'gsap';    
 
 import 'swiper/css';
 import 'swiper/css/navigation';

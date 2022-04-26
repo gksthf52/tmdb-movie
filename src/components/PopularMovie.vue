@@ -9,7 +9,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click="modal=1, pick=i" v-for='(a,i) in poster' :key='i'>
+    <swiper-slide @click=" run(); pick=i; " v-for='(a,i) in poster' :key='i'>
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
@@ -23,7 +23,9 @@
   </swiper>
 
   <transition name="fade">
-    <ModalPop @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
+    <ModalPop 
+    ref="modalani"
+     @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
   </transition>
 
 </template>
@@ -32,10 +34,13 @@
 
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+// import { gsap } from 'gsap';    
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import ModalPop from './modal/Modal-popular.vue'
 
+// let masterTL = gsap.timeline();
 
 export default {
   components:{
@@ -53,17 +58,35 @@ export default {
       pick : 0,
     }
   },
-  methods:{
 
+  mounted() {
+  },
+
+  methods:{
+    run() {
+      console.log(this.$refs.modalani)
+        this.modal=1
+        this.$refs.modalani.alert1()
+        // modal=1;
+    },
+    // alert(){
+    //   alert();
+    //   let tl = gsap.timeline();
+    //   tl.to('.poster-img',{y:50,duration:0.5})
+    //   tl.to('.poster-con',{y:50,duration:0.5})
+    //   tl.to('.modal-movie-tit',{y:50,opacity:0.5,duration:0.5})
+    //   tl.to('.modal-movie-date',{y:50,duration:0.5})
+    //   tl.to('.modal',{y:50,duration:0.5})
+
+    //   return tl;
+    // }
+    
   },
   setup() {
     return {
       modules: [ Navigation ]
     };
   },
-  mounted() {
-
-  }
 }
 </script>
 <style>
