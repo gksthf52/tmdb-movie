@@ -2,34 +2,71 @@
   <router-link to="/">홈</router-link>
   <router-link to="/detail">상세페이지</router-link>
 
-    <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
+    <!-- <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
     <NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
-    <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" />
+    <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" /> -->
+
+    <div class="wrap" v-for="(thiscate,i) in cates" :key="i">
+      <MovielistTitle :title="thiscate.title"/>
+      <swiper
+      :breakpoints="swiperOptions.breakpoints"
+      :modules="modules"
+      :slides-per-view="8"
+      navigation
+      @swiper="onSwiper"
+      @slideChange="onSlideChange">
+        <swiper-slide v-for='(a,i) in thiscate.data' :key='i'>
+          <div class="poster">
+            <div class="poster-img">
+              <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
+            </div>
+            <div class="poster-con">
+              <h5>{{a.title}}</h5>     
+              <span>{{a.release_date}}</span>         
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+
+  <transition name="fade">
+    <ModalPop 
+    ref="modalani"
+     @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
+  </transition>
     
-  <!-- <router-view></router-view> -->
+    
+  <router-view></router-view>
 </template>
 
 
 <script>
 import axios from 'axios';
-// import { gsap } from 'gsap';    
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './assets/style.css';
+import { Navigation,} from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import PopularMovie from './components/PopularMovie.vue'
-import UpcomingMovie from './components/UpcomingMovie.vue'
-import NowPlayingMovie from './components/NowPlayingMovie.vue'
+//컴포넌트
+import MovielistTitle from './components/MovielistTitle.vue'
+// import PopularMovie from './components/PopularMovie.vue'
+// import UpcomingMovie from './components/UpcomingMovie.vue'
+// import NowPlayingMovie from './components/NowPlayingMovie.vue'
 
 export default {
   name: 'App',
   computed:{
   },
   components: {
-    PopularMovie : PopularMovie,
-    UpcomingMovie : UpcomingMovie,
-    NowPlayingMovie : NowPlayingMovie,
+    Swiper,
+    SwiperSlide,
+
+    MovielistTitle : MovielistTitle,
+    // PopularMovie : PopularMovie,
+    // UpcomingMovie : UpcomingMovie,
+    // NowPlayingMovie : NowPlayingMovie,
   },
   setup() {
     const onSwiper = (swiper) => {
@@ -41,15 +78,15 @@ export default {
     return {
       onSwiper,
       onSlideChange,
+      modules: [ Navigation ]
     };
   },
   data () {
     return {
       apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
-      주제 : 'popular',
-      poster : [],
-      poster1 : [],
-      poster2 : [],
+      // poster : [],
+      // poster1 : [],
+      // poster2 : [],
       swiperOptions: {
         breakpoints: {
           1024: {
@@ -62,30 +99,85 @@ export default {
           slidesPerView: 3,
           }
         }
-      }   
+      },
+      cates : [],
+      requestPop : {
+        title:'인기영화',
+        data:''
+      },
+      requestNow : {
+        title:'현재상영중',
+        data:''
+      },
+      requestUpcom : {
+        title:'개봉예정',
+        data:''
+      },
+
+      modal : 0,
+      pick : 0,
+      // nowPlaying: {},
+      // popular: {},
+      // upComing: {},
     }
-  },
-  mounted () {
-
-    axios.get(`https://api.themoviedb.org/3/movie/${this.주제}?api_key=${this.apikey}&language=ko&page=1`)
-     .then( 결과 => {
-      this.poster = 결과.data.results
-       console.log(this.poster, this.주제);
-     })
-    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
-     .then( 결과1 => {
-      this.poster1 = 결과1.data.results
-      //  console.log(this.poster1);
-     })
-    axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
-     .then( 결과2 => {
-      this.poster2 = 결과2.data.results
-      //  console.log(this.poster2);
-     })
-
   },
   methods: {
 
+
+  },
+  // async mounted() {
+  //   const { data } = await movieApi.nowPlaying();
+  //   console.log(data.results);
+  //   this.movieList = data.results;
+  //   const { nowPlaying, popular, upComing } = movieApi;
+  //   const requestArr = [nowPlaying, popular, upComing];
+  //   const [now, pop, up] = await Promise.all(
+  //     requestArr.map((li) => li().then((res) => res.data.results))
+  //   );
+  //   console.log("pop");
+  //   console.log(pop);
+  //   this.SET_LOADING(false);
+  //   this.nowPlaying = now;
+  //   this.popular = pop;
+  //   this.upComing = up;
+  // } ,
+  mounted () {
+    let pop = 'https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1';
+    let now = 'https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1';
+    let upcom = 'https://api.themoviedb.org/3/movie/upcoming?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1';
+
+    const requestPop = axios.get(pop);
+    const requestNow = axios.get(now);
+    const requestUpcom = axios.get(upcom);
+    
+    axios
+      .all([requestPop,requestNow,requestUpcom])
+      .then(
+        axios.spread((...responses) => {
+          this.requestPop.data = responses[0].data.results;
+          this.requestNow.data = responses[1].data.results;
+          this.requestUpcom.data = responses[2].data.results;
+
+          this.cates.push(this.requestPop,this.requestNow,this.requestUpcom)
+          console.log(this.cates)
+        })
+      )
+
+    // axios.get(`https://api.themoviedb.org/3/movie/${this.주제}?api_key=${this.apikey}&language=ko&page=1`)
+    //  .then( 결과 => {
+    //   this.poster = 결과.data.results
+    //   //  console.log(this.poster, this.주제);
+    //  })
+    // axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+    //  .then( 결과1 => {
+    //   this.poster1 = 결과1.data.results
+    //   //  console.log(this.poster1);
+    //  })
+    // axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
+    //  .then( 결과2 => {
+    //   this.poster2 = 결과2.data.results
+    //   //  console.log(this.poster2);
+    //  })
 
   },
  actions : {
@@ -98,4 +190,5 @@ export default {
 
 
 <style>
+
 </style>

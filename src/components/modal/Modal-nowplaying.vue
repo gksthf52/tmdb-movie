@@ -20,7 +20,6 @@
 
 <script>
 import axios from 'axios';
-import { gsap } from 'gsap';    
 export default {
   props : {
     poster1 : Array,
@@ -59,7 +58,7 @@ export default {
   },
 
   mounted(){
-    gsap.to('.modal-movie-tit', {duration:0.3, opacity:0.5})    
+
   },
   }
 </script>

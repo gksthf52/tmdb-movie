@@ -27,7 +27,6 @@
 
 <script>
 import gsap from 'gsap';
-// import {onMounted} from 'vue';
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';

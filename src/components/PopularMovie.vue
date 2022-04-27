@@ -9,7 +9,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">    
-    <swiper-slide @click=" run(); pick=i; " v-for='(a,i) in poster' :key='i'>
+    <swiper-slide @click=" pick=i; modal = 1" v-for='(a,i) in poster' :key='i'>
       <div class="poster">          
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
@@ -31,16 +31,13 @@
 </template>
 
 <script>
-
+import { gsap } from 'gsap';    
 import { Navigation,} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-// import { gsap } from 'gsap';    
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import ModalPop from './modal/Modal-popular.vue'
-
-// let masterTL = gsap.timeline();
 
 export default {
   components:{
@@ -58,17 +55,13 @@ export default {
       pick : 0,
     }
   },
-
-  mounted() {
-  },
-
   methods:{
-    run() {
-      console.log(this.$refs.modalani)
-        this.modal=1
-        this.$refs.modalani.alert1()
-        // modal=1;
-    },
+    // run() {
+    //   console.log(this.$refs.modalani)
+    //     this.modal=1
+    //     this.$refs.modalani.alert1()
+    // },
+
     // alert(){
     //   alert();
     //   let tl = gsap.timeline();
@@ -81,12 +74,26 @@ export default {
     //   return tl;
     // }
     
+    animationUp(){
+      let tl = gsap.timeline();
+      tl.from('.poster',{y:50})
+      // tl.to('.poster',{y:50})
+    },
   },
+  
+  mounted() {
+    this.$nextTick(function(){
+      this.animationUp()
+    })
+  },
+
   setup() {
     return {
       modules: [ Navigation ]
     };
   },
+  created(){
+  }
 }
 </script>
 <style>
