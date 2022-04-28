@@ -15,14 +15,14 @@
       navigation
       @swiper="onSwiper"
       @slideChange="onSlideChange">
-        <swiper-slide v-for='(a,i) in thiscate.data' :key='i'>
+        <swiper-slide @click="pick = i; modalOpen(); " v-for='(thisposter,i) in thiscate.data' :key='i'>
           <div class="poster">
             <div class="poster-img">
-              <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
+              <img :src='`https://www.themoviedb.org/t/p/w300${thisposter.poster_path}`' alt="" style="width:100%">
             </div>
             <div class="poster-con">
-              <h5>{{a.title}}</h5>     
-              <span>{{a.release_date}}</span>         
+              <h5>{{thisposter.title}}</h5>     
+              <span>{{thisposter.release_date}}</span>
             </div>
           </div>
         </swiper-slide>
@@ -30,9 +30,10 @@
     </div>
 
   <transition name="fade">
-    <ModalPop 
+    <MoviePopup :modal="modal" :cates="cates"/>
+    <!-- <ModalPop 
     ref="modalani"
-     @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>  
+     @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>   -->
   </transition>
     
     
@@ -51,6 +52,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 
 //컴포넌트
 import MovielistTitle from './components/MovielistTitle.vue'
+import MoviePopup from './components/modal/MoviePopup.vue'
 // import PopularMovie from './components/PopularMovie.vue'
 // import UpcomingMovie from './components/UpcomingMovie.vue'
 // import NowPlayingMovie from './components/NowPlayingMovie.vue'
@@ -64,6 +66,7 @@ export default {
     SwiperSlide,
 
     MovielistTitle : MovielistTitle,
+    MoviePopup : MoviePopup,
     // PopularMovie : PopularMovie,
     // UpcomingMovie : UpcomingMovie,
     // NowPlayingMovie : NowPlayingMovie,
@@ -84,6 +87,9 @@ export default {
   data () {
     return {
       apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
+      modal : 0,
+      poster : '',
+      thisdata:'',
       // poster : [],
       // poster1 : [],
       // poster2 : [],
@@ -113,8 +119,7 @@ export default {
         title:'개봉예정',
         data:''
       },
-
-      modal : 0,
+      
       pick : 0,
       // nowPlaying: {},
       // popular: {},
@@ -123,6 +128,9 @@ export default {
   },
   methods: {
 
+    modalOpen(){
+      this.modal = 1
+    },
 
   },
   // async mounted() {
@@ -156,10 +164,10 @@ export default {
         axios.spread((...responses) => {
           this.requestPop.data = responses[0].data.results;
           this.requestNow.data = responses[1].data.results;
-          this.requestUpcom.data = responses[2].data.results;
-
-          this.cates.push(this.requestPop,this.requestNow,this.requestUpcom)
-          console.log(this.cates)
+          this.requestUpcom.data = responses[2].data.results;   
+          
+          this.cates.push(this.requestPop, this.requestNow, this.requestUpcom)
+          // console.log(this.cates)
         })
       )
 
