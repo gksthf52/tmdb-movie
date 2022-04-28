@@ -1,19 +1,20 @@
 <template>
     <div class="modal-full" v-if="modal == 1">
       <div class="modal-area">
-        <!-- <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thisdata[pick].backdrop_path)})`}"></div> -->
-        <!-- <div class="modal-cnt">
+        <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thiscate[pick].backdrop_path)})`}"></div>
+        <div class="modal-bg">{{thiscate[pick].backdrop_path}}</div>
+        <div class="modal-cnt">
           <div class="modal-img">
-            <img :src='imageurl(poster[pick].poster_path)' alt="" style="">
+            <img :src='imageurl(thiscate[pick].poster_path)' alt="" style="">
           </div>
           <div class="modal-text">
-            <h1 class="modal-movie-tit">{{poster[pick].title}}</h1>     
-            <p class="modal-movie-date">{{poster[pick].release_date }} </p>     
-            <p class="overview" :class="{short : full}" @click="more">{{poster[pick].overview}}</p>     
+            <h1 class="modal-movie-tit">{{thiscate[pick].title}}</h1>     
+            <p class="modal-movie-date">{{thiscate[pick].release_date }} </p>     
+            <p class="overview" :class="{short : full}" @click="more">{{thiscate[pick].overview}}</p>     
           </div>
-          <iframe id="ytplayer" type="text/html" :src='youtubeurl(poster[pick].id)' frameborder="0"></iframe>
+          <iframe id="ytplayer" type="text/html" :src='youtubeurl(thiscate[pick].id)' frameborder="0"></iframe>
         </div>      
-        <button class="close-btn" @click="$emit('closeModal')">닫기</button> -->
+        <button class="close-btn" @click="$emit('closeModal')">닫기</button>
       </div>
     </div>  
 </template>
@@ -28,7 +29,9 @@ export default {
     modal : Number,
     pick : Number,
     thisdata : Array,
-    cates : Array
+    cates : Array,
+    thisposter : Array,
+    thiscate:Array
   },
   data () {
     return{
@@ -79,7 +82,7 @@ export default {
 
   mounted(){    
     
-    console.log(this.cates[0])
+    // console.log(this.cates)
   },
   created(){
     // this.alert1()

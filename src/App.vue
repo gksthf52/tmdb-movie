@@ -2,20 +2,21 @@
   <router-link to="/">홈</router-link>
   <router-link to="/detail">상세페이지</router-link>
 
-    <!-- <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
-    <NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
+     <PopularMovie :poster="poster" :swiperOptions="swiperOptions" />
+    <!--<NowPlayingMovie :poster1="poster1" :swiperOptions="swiperOptions" />
     <UpcomingMovie :poster2="poster2" :swiperOptions="swiperOptions" /> -->
 
     <div class="wrap" v-for="(thiscate,i) in cates" :key="i">
       <MovielistTitle :title="thiscate.title"/>
-      <swiper
+      <MovielistCnt :thiscate="thiscate.data" :cates="cates" :swiperOptions="swiperOptions"/>
+      <!-- <swiper
       :breakpoints="swiperOptions.breakpoints"
       :modules="modules"
       :slides-per-view="8"
       navigation
       @swiper="onSwiper"
       @slideChange="onSlideChange">
-        <swiper-slide @click="pick = i; modalOpen(); " v-for='(thisposter,i) in thiscate.data' :key='i'>
+        <swiper-slide @click="modalOpen(); " v-for='(thisposter,i) in thiscate.data' :key='i'>
           <div class="poster">
             <div class="poster-img">
               <img :src='`https://www.themoviedb.org/t/p/w300${thisposter.poster_path}`' alt="" style="width:100%">
@@ -26,11 +27,11 @@
             </div>
           </div>
         </swiper-slide>
-      </swiper>
+      </swiper> -->
     </div>
 
   <transition name="fade">
-    <MoviePopup :modal="modal" :cates="cates"/>
+    <MoviePopup @closeModal="modal--;" :modal="modal" :cates="cates" />
     <!-- <ModalPop 
     ref="modalani"
      @closeModal="modal--;" :modal="modal" :poster="poster" :pick="pick"/>   -->
@@ -52,8 +53,10 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 
 //컴포넌트
 import MovielistTitle from './components/MovielistTitle.vue'
+import MovielistCnt from './components/MovielistCnt.vue'
 import MoviePopup from './components/modal/MoviePopup.vue'
-// import PopularMovie from './components/PopularMovie.vue'
+
+import PopularMovie from './components/PopularMovie.vue'
 // import UpcomingMovie from './components/UpcomingMovie.vue'
 // import NowPlayingMovie from './components/NowPlayingMovie.vue'
 
@@ -67,7 +70,8 @@ export default {
 
     MovielistTitle : MovielistTitle,
     MoviePopup : MoviePopup,
-    // PopularMovie : PopularMovie,
+    PopularMovie : PopularMovie,
+    MovielistCnt : MovielistCnt,
     // UpcomingMovie : UpcomingMovie,
     // NowPlayingMovie : NowPlayingMovie,
   },
@@ -88,9 +92,10 @@ export default {
     return {
       apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
       modal : 0,
-      poster : '',
+      parentpop : '',
+      yayaya:'',
       thisdata:'',
-      // poster : [],
+      poster : [],
       // poster1 : [],
       // poster2 : [],
       swiperOptions: {
@@ -107,6 +112,7 @@ export default {
         }
       },
       cates : [],
+      datas : [],
       requestPop : {
         title:'인기영화',
         data:''
@@ -162,20 +168,34 @@ export default {
       .all([requestPop,requestNow,requestUpcom])
       .then(
         axios.spread((...responses) => {
+          // this.requestPop.data = responses[0].data.results;
+          // this.requestNow.data = responses[1].data.results;
+          // this.requestUpcom.data = responses[2].data.results;   
+          
+          // this.cates.push(this.requestPop, this.requestNow, this.requestUpcom)
+
+          // console.log(this.cates)
+          
           this.requestPop.data = responses[0].data.results;
           this.requestNow.data = responses[1].data.results;
-          this.requestUpcom.data = responses[2].data.results;   
+          this.requestUpcom.data = responses[2].data.results;
+
+          const res1 = this.requestPop.data;
+          const res2 = this.requestNow.data;
+          const res3 = this.requestUpcom.data;
           
           this.cates.push(this.requestPop, this.requestNow, this.requestUpcom)
-          // console.log(this.cates)
+          this.datas.push(res1, res2, res3)
+
+          console.log(this.cates, this.datas)
         })
       )
 
-    // axios.get(`https://api.themoviedb.org/3/movie/${this.주제}?api_key=${this.apikey}&language=ko&page=1`)
-    //  .then( 결과 => {
-    //   this.poster = 결과.data.results
-    //   //  console.log(this.poster, this.주제);
-    //  })
+    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${this.apikey}&language=ko&page=1`)
+     .then( 결과 => {
+      this.poster = 결과.data.results
+      //  console.log(this.poster, this.주제);
+     })
     // axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1`)
     //  .then( 결과1 => {
     //   this.poster1 = 결과1.data.results
