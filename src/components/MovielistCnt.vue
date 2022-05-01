@@ -20,12 +20,12 @@
   </swiper>
           
   <transition name="fade">
-    <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate'/>
+    <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate' />
   </transition>
 </template>
 
 <script>
-import { gsap } from 'gsap';    
+// import { gsap } from 'gsap';    
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation,} from 'swiper';
 import MoviePopup from './modal/MoviePopup.vue'
@@ -49,22 +49,22 @@ export default {
       pick : 0,
     }
   },
+  watch : {
+    modal(a) {
+      if(a > 0) {
+        // alert();
+        // gsap.to('.poster-img', { y:50 , duration:0.5 })
+        // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
+        
+      } 
+    }
+  },
   methods:{
-    // modalclick(){
-
-    //   let tl = gsap.timeline();
-    //   tl.from('.modal-movie-tit',{y:50,opacity:0.5,duration:0.5})
-    //   tl.to('.modal-movie-date',{y:50,duration:0.5})
-    //   tl.to('.modal',{y:50,duration:0.5})
-
-    //   return tl;
-    // },
-
     modalopen(){
       this.modal=1;
 
       // gsap.to('.poster-img', { y:50 , duration:0.5 })
-      gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
+      // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
     }
   },
   setup() {

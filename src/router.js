@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from './Home.vue'
-import Detail from './Detail.vue'
-// import MovieDetail from './components/MovieDetail.vue'
+import Search from './Search.vue'
+
 
 const routes = [ 
   {
@@ -9,8 +9,8 @@ const routes = [
     component: Home
   },
   {
-    path: "/detail",
-    component: Detail
+    path: "/search",
+    component: Search
   },
 ];
 

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { gsap } from 'gsap';    
+// import { gsap } from 'gsap';    
 import axios from 'axios';
 
 export default {
@@ -31,24 +31,23 @@ export default {
   data () {
     return{
       full : true,
-      movieKey :''
+      movieKey :'',
+
     }
   },
+  watch :{
+    // modal(a) {
+    //   if(a > 0) {
+    //     alert();
+    //     this.modalani()        
+    //   } 
+    // }
+  },
   methods:{
-    alert1(){
-      alert();
 
-      if(this.modal == 1){
-        alert()
-      let tl = gsap.timeline();
-      tl.to('.poster-img',{y:50,duration:0.5})
-      tl.from('.poster-con',{y:50,duration:0.5})
-      tl.from('.modal-movie-tit',{y:50,opacity:0.5,duration:0.5})
-      tl.to('.modal-movie-date',{y:50,duration:0.5})
-      tl.to('.modal',{y:50,duration:0.5})
-
-      return tl;
-      }
+    modalani(){
+        // gsap.to('.poster-img', { y:50 , duration:0.5 })
+        // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
     },
 
     // 이미지
@@ -75,22 +74,7 @@ export default {
   setup() {
     
   },
-  mounted(){    
-    
-    // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
-    // gsap.to('.modal-movie-date', { y:50 , duration:0.5 })
-
-    // if(this.modal == 1){
-    //   alert();
-
-      let tl = gsap.timeline();
-      // tl.to('.poster-img',{y:50,duration:0.5})
-      // tl.from('.poster-con',{y:50,duration:0.5})
-      tl.to('.modal-movie-tit',{x:50,opacity:0.5,duration:0.5})
-      tl.to('.modal-movie-date',{x:50,duration:0.5})
-
-      return tl;
-    // }
+  mounted(){
 
   },
 }
