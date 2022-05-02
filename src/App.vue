@@ -10,10 +10,17 @@
 
 
 <script>
+// import { gsap } from 'gsap';    
 import './assets/style.css';
 
 export default {
-  
+  mounted(){
+    // gsap.to('.swiper-slide', { y:20 , duration:0.3 })
+    
+  },
+  methods:{
+
+  }
 }
 
 </script>

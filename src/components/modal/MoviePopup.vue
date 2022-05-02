@@ -1,21 +1,23 @@
 <template>
-  <div class="modal-full" v-if="modal == 1">
-    <div class="modal-area">
-      <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thiscate[pick].backdrop_path)})`}"></div>
-      <div class="modal-cnt">
-        <div class="modal-img">
-          <img :src='imageurl(thiscate[pick].poster_path)' alt="" style="">
-        </div>
-        <div class="modal-text">
-          <h1 class="modal-movie-tit">{{thiscate[pick].title}}</h1>     
-          <p class="modal-movie-date">{{thiscate[pick].release_date }} </p>     
-          <p class="overview" :class="{short : full}" @click="more">{{thiscate[pick].overview}}</p>     
-        </div>
-        <iframe id="ytplayer" type="text/html" :src='youtubeurl(thiscate[pick].id)' frameborder="0"></iframe>
-      </div>      
-      <button class="close-btn" @click="$emit('closeModal')">닫기</button>
-    </div>
-  </div>  
+  <transition name="fade" appear>
+    <div class="modal-full" v-if="modal == 1">
+      <div class="modal-area">
+        <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thiscate[pick].backdrop_path)})`}"></div>
+        <div class="modal-cnt">
+          <div class="modal-img" ref="box">
+            <img :src='imageurl(thiscate[pick].poster_path)' alt="" style="">
+          </div>
+          <div class="modal-text">
+            <h1 class="modal-movie-tit">{{thiscate[pick].title}}</h1>     
+            <p class="modal-movie-date">{{thiscate[pick].release_date }} </p>     
+            <p class="overview" :class="{short : full}" @click="more">{{thiscate[pick].overview}}</p>     
+          </div>
+          <iframe id="ytplayer" type="text/html" :src='youtubeurl(thiscate[pick].id)' frameborder="0"></iframe>
+        </div>      
+        <button class="close-btn" @click="$emit('closeModal')">닫기</button>
+      </div>
+    </div>  
+  </transition>
 </template>
 
 <script>
@@ -32,23 +34,23 @@ export default {
     return{
       full : true,
       movieKey :'',
-
     }
   },
-  watch :{
-    // modal(a) {
-    //   if(a > 0) {
-    //     alert();
-    //     this.modalani()        
-    //   } 
-    // }
+  // watch :{
+  //   modal(a) {
+  //     if(a == 1) {
+  //       alert();
+  //       this.modalani()
+  //     } 
+  //   }
+  // },
+  mounted(){
+    // this.modalani()
   },
   methods:{
-
-    modalani(){
-        // gsap.to('.poster-img', { y:50 , duration:0.5 })
-        // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
-    },
+    // modalani(){
+    //   return gsap.to('.modal-movie-tit', { y:-20 , duration:0.5 }), gsap.to('.poster-img', { y:50 , duration:0.5 })
+    // },
 
     // 이미지
     imageurl(img) {
@@ -69,13 +71,7 @@ export default {
     // 영화 설명 간추려서 보여주기
     more() {
       this.full = !this.full
-    },
-  },
-  setup() {
-    
-  },
-  mounted(){
-
+    }
   },
 }
 </script>

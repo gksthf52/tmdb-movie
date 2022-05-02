@@ -19,9 +19,7 @@
     </swiper-slide>
   </swiper>
           
-  <transition name="fade">
     <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate' />
-  </transition>
 </template>
 
 <script>
@@ -49,22 +47,9 @@ export default {
       pick : 0,
     }
   },
-  watch : {
-    modal(a) {
-      if(a > 0) {
-        // alert();
-        // gsap.to('.poster-img', { y:50 , duration:0.5 })
-        // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
-        
-      } 
-    }
-  },
   methods:{
     modalopen(){
       this.modal=1;
-
-      // gsap.to('.poster-img', { y:50 , duration:0.5 })
-      // gsap.to('.modal-movie-tit', { y:50 , duration:0.5 })
     }
   },
   setup() {
