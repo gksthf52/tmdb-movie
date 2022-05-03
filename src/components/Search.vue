@@ -1,7 +1,7 @@
 <template>
   <div class="searchWrap">
     <input type="text" @input=" search($event.target.value) ">
-      <p>{{movietitle}}</p>
+      <!-- <p>{{movietitle}}</p> -->
     <div class="poster" v-for="a in movietitle" :key="a">
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">

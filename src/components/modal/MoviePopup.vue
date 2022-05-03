@@ -46,20 +46,26 @@ export default {
   // },
 
   updated(){
-    this.$nextTick(function () {
-      gsap.to('.modal-movie-tit', { y:-20 , duration:0.5 })
-  })
+      let tl = gsap.timeline();
+
+      tl.from('.modal-movie-tit',{opcity:0.2, y:30, duration: 0.8})
+      tl.from('.modal-movie-date',{opcity:0.2,y:30,duration: 0.8}, "-=0.6")
+      tl.from('.overview',{opcity:0.2,y:30,duration:0.8}, "-=0.6")
+
+      return tl;
   },
 
   mounted(){
-    // this.modalani()
+      // let tl = gsap.timeline();
+
+      // tl.from('.modal-movie-tit',{opcity:0, y:30, duration: 0.8})
+      // tl.from('.modal-movie-date',{opcity:0,y:30,duration: 0.8}, "-=0.6")
+      // tl.from('.overview',{opcity:0,y:30,duration:0.8}, "-=0.6")
+
+      // return tl;
   },
   
   methods:{
-    // modalani(){
-    //   return gsap.to('.modal-movie-tit', { y:-20 , duration:0.5 }), gsap.to('.poster-img', { y:50 , duration:0.5 })
-    // },
-
     // 이미지
     imageurl(img) {
       return `https://www.themoviedb.org/t/p/w300${img}`
@@ -85,6 +91,5 @@ export default {
 </script>
 
 <style>
-
 
 </style>

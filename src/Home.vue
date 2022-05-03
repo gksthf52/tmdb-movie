@@ -87,10 +87,6 @@ export default {
   },
   methods: {
 
-    // modalOpen(){
-    //   this.modal = 1
-    // },
-
   },
   mounted () {
     let pop = 'https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1';
