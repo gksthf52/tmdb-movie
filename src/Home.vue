@@ -52,8 +52,8 @@ export default {
   },
   data () {
     return {
-      apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
-      modal : 0,
+      // apikey:'eee59ded3d3f9fb38792c3a4c12362a5',
+      // modal : 0,
       // poster : [],
       // poster1 : [],
       // poster2 : [],
@@ -87,9 +87,9 @@ export default {
   },
   methods: {
 
-    modalOpen(){
-      this.modal = 1
-    },
+    // modalOpen(){
+    //   this.modal = 1
+    // },
 
   },
   mounted () {

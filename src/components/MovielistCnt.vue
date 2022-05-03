@@ -19,7 +19,7 @@
     </swiper-slide>
   </swiper>
           
-    <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate' />
+  <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate' />
 </template>
 
 <script>

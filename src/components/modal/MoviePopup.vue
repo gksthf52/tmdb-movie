@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade" appear>
+  <transition name="fade">
     <div class="modal-full" v-if="modal == 1">
       <div class="modal-area">
         <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thiscate[pick].backdrop_path)})`}"></div>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-// import { gsap } from 'gsap';    
+import { gsap } from 'gsap';    
 import axios from 'axios';
 
 export default {
@@ -44,9 +44,17 @@ export default {
   //     } 
   //   }
   // },
+
+  updated(){
+    this.$nextTick(function () {
+      gsap.to('.modal-movie-tit', { y:-20 , duration:0.5 })
+  })
+  },
+
   mounted(){
     // this.modalani()
   },
+  
   methods:{
     // modalani(){
     //   return gsap.to('.modal-movie-tit', { y:-20 , duration:0.5 }), gsap.to('.poster-img', { y:50 , duration:0.5 })
