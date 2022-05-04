@@ -31,7 +31,7 @@ export default {
     let originalmovietitle = ref([]);
 
     onMounted(() => {
-      axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko`)
+      axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=2`)
       .then( a => {
         movietitle.value = a.data.results;
         originalmovietitle.value = [...a.data.results]

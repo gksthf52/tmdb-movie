@@ -52,12 +52,21 @@ export default {
       this.modal=1;
     }
   },
+  beforeCreate(){
+    console.log('cnt:beforeCreate')
+  },
+  created(){
+    console.log('cnt:created')
+  },
+  beforeMount() {
+    console.log('cnt-beforeMount')
+  },
   setup() {
     const onSwiper = (swiper) => {
       console.log(swiper);
     };
     const onSlideChange = () => {
-      console.log('slide change');
+      // console.log('slide change');
     };
     return {
       onSwiper,

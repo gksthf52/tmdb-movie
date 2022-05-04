@@ -44,25 +44,31 @@ export default {
   //     } 
   //   }
   // },
-
+  beforeCreate(){
+    console.log('modal:beforeCreate')
+  },
+  created(){
+    console.log('modal:created')
+  },
+  beforeMount() {
+    console.log('modal-beforeMount')
+  },
   updated(){
-      let tl = gsap.timeline();
+    let tl = gsap.timeline();
 
-      tl.from('.modal-movie-tit',{opcity:0.2, y:30, duration: 0.8})
-      tl.from('.modal-movie-date',{opcity:0.2,y:30,duration: 0.8}, "-=0.6")
-      tl.from('.overview',{opcity:0.2,y:30,duration:0.8}, "-=0.6")
+    tl.to('.modal-area' ,  {scale:1, duration: 0.5})      
+    tl.to('.modal-movie-tit' , {opacity:1, y:0, duration: 0.5})
+    tl.to('.modal-movie-date' ,  {opacity:1, y:0,duration: 0.7},'-=0.2')
+    tl.to('.overview' ,{opacity:1, y:0, duration: 0.7},'-=0.4')
+    
+    console.log('modal-updated')
 
-      return tl;
+    return tl;
   },
 
   mounted(){
-      // let tl = gsap.timeline();
 
-      // tl.from('.modal-movie-tit',{opcity:0, y:30, duration: 0.8})
-      // tl.from('.modal-movie-date',{opcity:0,y:30,duration: 0.8}, "-=0.6")
-      // tl.from('.overview',{opcity:0,y:30,duration:0.8}, "-=0.6")
-
-      // return tl;
+    console.log('modal-mounted')
   },
   
   methods:{
