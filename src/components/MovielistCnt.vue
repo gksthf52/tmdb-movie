@@ -6,7 +6,7 @@
   navigation
   @swiper="onSwiper"
   @slideChange="onSlideChange">
-    <swiper-slide @click="pick=i; modalopen();" v-for='(a,i) in thiscate' :key='i'>
+    <swiper-slide @click="pick=i; modalopen();" v-for='(a,i) in movielist' :key='i'>
       <div class="poster">
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w300${a.poster_path}`' alt="" style="width:100%">
@@ -19,11 +19,10 @@
     </swiper-slide>
   </swiper>
           
-  <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :thiscate='thiscate' />
+  <MoviePopup @closeModal="modal--;" :modal="modal" :pick="pick" :movielist='movielist' />
 </template>
 
 <script>
-// import { gsap } from 'gsap';    
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation,} from 'swiper';
 import MoviePopup from './modal/MoviePopup.vue'
@@ -39,7 +38,7 @@ export default {
   },
   props : {
     swiperOptions : Object,
-    thiscate:Array
+    movielist:Array
   },
   data (){
     return {
@@ -52,21 +51,12 @@ export default {
       this.modal=1;
     }
   },
-  beforeCreate(){
-    console.log('cnt:beforeCreate')
-  },
-  created(){
-    console.log('cnt:created')
-  },
-  beforeMount() {
-    console.log('cnt-beforeMount')
-  },
   setup() {
     const onSwiper = (swiper) => {
       console.log(swiper);
     };
     const onSlideChange = () => {
-      // console.log('slide change');
+      console.log('slide change');
     };
     return {
       onSwiper,

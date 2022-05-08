@@ -1,8 +1,8 @@
 <template>
 
-  <div class="movieWrap" v-for="(thiscate,i) in cates" :key="i">
-      <MovielistTitle :title="thiscate.title"/>
-      <MovielistCnt :thiscate="thiscate.data" :cates="cates" :swiperOptions="swiperOptions"/>
+  <div class="movieWrap" v-for="(movielist,i) in moviecate" :key="i">
+      <MovielistTitle :title="movielist.title"/>
+      <MovielistCnt :movielist="movielist.data" :moviecate="moviecate" :swiperOptions="swiperOptions"/>
     </div>
 </template>
 
@@ -15,7 +15,7 @@ import MovielistTitle from './components/MovielistTitle.vue'
 import MovielistCnt from './components/MovielistCnt.vue'
 
 export default {
-  name: 'App',
+  name: 'Home',
   components: {
     MovielistTitle : MovielistTitle,
     MovielistCnt : MovielistCnt,
@@ -35,7 +35,9 @@ export default {
           }
         }
       },
-      cates : [],
+
+      moviecate : [],
+
       requestPop : {
         title:'인기영화',
         data:''
@@ -49,18 +51,6 @@ export default {
         data:''
       }, 
     }
-  },
-  methods: {
-
-  },
-  beforeCreate(){
-    console.log('home:beforeCreate')
-  },
-  created(){
-    console.log('home:created')
-  },
-  beforeMount() {
-    console.log('home-beforeMount')
   },
   mounted () {
     let pop = 'https://api.themoviedb.org/3/movie/popular?api_key=eee59ded3d3f9fb38792c3a4c12362a5&language=ko&page=1';
@@ -79,11 +69,8 @@ export default {
           this.requestNow.data = responses[1].data.results;
           this.requestUpcom.data = responses[2].data.results;   
           
-          this.cates.push(this.requestPop, this.requestNow, this.requestUpcom)
-
-          // console.log(this.cates)
-          console.log('home-Mount')
-
+          this.moviecate.push(this.requestPop, this.requestNow, this.requestUpcom)
+          // console.log(this.moviecate)
         })
       )
 

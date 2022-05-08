@@ -2,17 +2,17 @@
   <transition name="fade">
     <div class="modal-full" v-if="modal == 1">
       <div class="modal-area">
-        <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(thiscate[pick].backdrop_path)})`}"></div>
+        <div class="modal-bg" :style="{ backgroundImage: `url(${imageurl(movielist[pick].backdrop_path)})`}"></div>
         <div class="modal-cnt">
           <div class="modal-img" ref="box">
-            <img :src='imageurl(thiscate[pick].poster_path)' alt="" style="">
+            <img :src='imageurl(movielist[pick].poster_path)' alt="" style="">
           </div>
           <div class="modal-text">
-            <h1 class="modal-movie-tit">{{thiscate[pick].title}}</h1>     
-            <p class="modal-movie-date">{{thiscate[pick].release_date }} </p>     
-            <p class="overview" :class="{short : full}" @click="more">{{thiscate[pick].overview}}</p>     
+            <h1 class="modal-movie-tit">{{movielist[pick].title}}</h1>     
+            <p class="modal-movie-date">{{movielist[pick].release_date }} </p>     
+            <p class="overview" :class="{short : full}" @click="more">{{movielist[pick].overview}}</p>     
           </div>
-          <iframe id="ytplayer" type="text/html" :src='youtubeurl(thiscate[pick].id)' frameborder="0"></iframe>
+          <iframe id="ytplayer" type="text/html" :src='youtubeurl(movielist[pick].id)' frameborder="0"></iframe>
         </div>      
         <button class="close-btn" @click="$emit('closeModal')">닫기</button>
       </div>
@@ -26,7 +26,7 @@ import axios from 'axios';
 
 export default {
   props : {
-    thiscate:Array,
+    movielist:Array,
     modal : Number,
     pick : Number,
   },
@@ -36,23 +36,6 @@ export default {
       movieKey :'',
     }
   },
-  // watch :{
-  //   modal(a) {
-  //     if(a == 1) {
-  //       alert();
-  //       this.modalani()
-  //     } 
-  //   }
-  // },
-  beforeCreate(){
-    console.log('modal:beforeCreate')
-  },
-  created(){
-    console.log('modal:created')
-  },
-  beforeMount() {
-    console.log('modal-beforeMount')
-  },
   updated(){
     let tl = gsap.timeline();
 
@@ -60,17 +43,9 @@ export default {
     tl.to('.modal-movie-tit' , {opacity:1, y:0, duration: 0.5})
     tl.to('.modal-movie-date' ,  {opacity:1, y:0,duration: 0.7},'-=0.2')
     tl.to('.overview' ,{opacity:1, y:0, duration: 0.7},'-=0.4')
-    
-    console.log('modal-updated')
 
     return tl;
-  },
-
-  mounted(){
-
-    console.log('modal-mounted')
-  },
-  
+  },  
   methods:{
     // 이미지
     imageurl(img) {
