@@ -1,6 +1,6 @@
 <template>
   <div class="searchWrap">
-    <input type="text" @input=" search($event.target.value) ">
+    <input type="text" placeholder="영화 제목을 입력하세요." @input=" search($event.target.value) ">
     <div class="poster" v-for="a in searchmovie" :key="a">
         <div class="poster-img">
           <img :src='`https://www.themoviedb.org/t/p/w200${a.poster_path}`' alt="">
