@@ -62,7 +62,7 @@ export default {
     const requestUpcom = axios.get(upcom);
     
     axios
-      .all([requestPop,requestNow,requestUpcom])
+      .all([requestPop, requestNow, requestUpcom])
       .then(
         axios.spread((...responses) => {
           this.requestPop.data = responses[0].data.results;
@@ -75,9 +75,6 @@ export default {
       )
 
   },
- actions : {
-
- }
 }
 
 </script>

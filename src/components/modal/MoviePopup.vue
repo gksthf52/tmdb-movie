@@ -8,7 +8,7 @@
             <img :src='imageurl(movielist[pick].poster_path)' alt="" style="">
           </div>
           <div class="modal-text">
-            <h1 class="modal-movie-tit">{{movielist[pick].title}}</h1>     
+            <h1 class="modal-movie-tit">{{movielist[pick].title}} <img @click="homepage(movielist[pick].id)" src="../../assets/link.png" alt=""></h1>
             <p class="modal-movie-date">{{movielist[pick].release_date }} </p>     
             <p class="overview" :class="{short : full}" @click="more">{{movielist[pick].overview}}</p>     
           </div>
@@ -34,15 +34,16 @@ export default {
     return{
       full : true,
       movieKey :'',
+      // homepageLink :'',
     }
   },
   updated(){
     let tl = gsap.timeline();
 
-    tl.to('.modal-area' ,  {scale:1, duration: 0.5})      
-    tl.to('.modal-movie-tit' , {opacity:1, y:0, duration: 0.5})
-    tl.to('.modal-movie-date' ,  {opacity:1, y:0,duration: 0.7},'-=0.2')
-    tl.to('.overview' ,{opacity:1, y:0, duration: 0.7},'-=0.4')
+    tl.to('.modal-area' ,  {scale:1, duration: 0.7})
+    tl.to('.modal-movie-tit' , {opacity:1, y:0, duration: 0.8})
+    tl.to('.modal-movie-date' ,  {opacity:1, y:0,duration: 0.8},'-=0.2')
+    tl.to('.overview' ,{opacity:1, y:0, duration: 0.8},'-=0.4')
 
     return tl;
   },  
@@ -61,6 +62,18 @@ export default {
         })
 
       return `https://www.youtube.com/embed/${this.movieKey}?autoplay=1&origin=http://example.com`
+    },
+
+    // 해당 영화 홈페이지로 이동
+    homepage(Id) {
+        axios.get(`https://api.themoviedb.org/3/movie/${Id}?api_key=eee59ded3d3f9fb38792c3a4c12362a5`)
+        .then (결과1 => {
+          this.homepageLink = 결과1.data.homepage
+          // console.log(Id, this.homepageLink);
+
+          // location.href = this.homepageLink 
+          window.open(this.homepageLink)
+        })        
     },
 
     // 영화 설명 간추려서 보여주기
